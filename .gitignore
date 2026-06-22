@@ -1,0 +1,11 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+.vite
+.vercel
+
+# carpetas de trabajo (capturas crudas, no necesarias para el deploy)
+imagenes del staff/
+imagenes para la web/

@@ -1,0 +1,276 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--ink);
+  background-color: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Textura de papel: grano sutil sobre todo el sitio (sensación táctil, hecha a mano) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+::selection {
+  background: var(--clay);
+  color: var(--paper);
+}
+
+/* — Layout — */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--space-section);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--clay-deep);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 26px;
+  height: 1.5px;
+  background: var(--clay);
+}
+
+.section-title {
+  font-size: var(--fs-h2);
+  max-width: 18ch;
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+/* — Botones — */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.6rem;
+  border-radius: var(--pill);
+  border: 1.5px solid transparent;
+  font-weight: 600;
+  font-size: 0.98rem;
+  letter-spacing: 0.01em;
+  transition: transform 0.25s var(--ease), background-color 0.25s var(--ease),
+    color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  will-change: transform;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary {
+  background: var(--clay);
+  color: var(--paper);
+  box-shadow: var(--shadow-card);
+}
+
+.btn-primary:hover {
+  background: var(--clay-deep);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+
+.btn-ghost:hover {
+  border-color: var(--ink);
+  background: rgba(36, 29, 23, 0.04);
+}
+
+.btn-wa {
+  background: var(--wa);
+  color: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+.btn-wa:hover {
+  background: var(--wa-deep);
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  color: var(--clay-deep);
+  transition: gap 0.25s var(--ease);
+}
+
+.text-link:hover {
+  gap: 0.7rem;
+}
+
+/* — Scroll reveal — */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* — Accesibilidad: respeta a quien reduce el movimiento — */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Foco visible accesible (WCAG 2.4.11) */
+*:focus-visible {
+  outline: 3px solid var(--clay-deep);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.consultas *:focus-visible,
+.ctaband *:focus-visible,
+.footer *:focus-visible {
+  outline-color: var(--gold);
+}
+
+/* Evita desbordes horizontales por palabras largas */
+h1,
+h2,
+h3,
+h4 {
+  overflow-wrap: break-word;
+}
+
+/* Saltar al contenido (teclado / lectores de pantalla) */
+.skip-link {
+  position: absolute;
+  top: -200%;
+  left: 1rem;
+  z-index: 10000;
+  background: var(--clay-deep);
+  color: var(--paper);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 var(--r-sm) var(--r-sm);
+  font-weight: 600;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* Movimiento reducido: apaga animaciones continuas y el trazo de la senda */
+@media (prefers-reduced-motion: reduce) {
+  .fab-wa,
+  .fab-wa__pulse {
+    animation: none;
+  }
+  .fab-wa__pulse {
+    display: none;
+  }
+  .senda-path {
+    transition: none;
+    stroke-dashoffset: 0;
+  }
+  .senda-dot {
+    transition: none;
+    opacity: 1;
+  }
+}
